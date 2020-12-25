@@ -1,4 +1,5 @@
 using System.Data;
+using AirportAPI.Repositories.Flight;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Npgsql;
@@ -12,7 +13,8 @@ namespace AirportAPI.Extensions
         {
             services.AddTransient<IDbConnection>(
                 options => new NpgsqlConnection(configuration.GetConnectionString("DefaultConnection")));
-            
+
+            services.AddScoped<IFlightRepository, FlightRepository>();
             return services;
         }
     }
