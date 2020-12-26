@@ -39,9 +39,9 @@ namespace AirportAPI.DapperDataAccess.Repositories.Flight
             const string query =
                 @"SELECT *, airline_id FROM flight AS f
                     INNER JOIN trip t on t.id = f.trip_id
-                    INNER JOIN airline al on al.id = airline_id
-                    INNER JOIN airport a1 on a1.id = f.from_location_id
-                    INNER JOIN airport a2 on a2.id = f.to_location_id
+                    INNER JOIN airline a on a.id = airline_id
+                    INNER JOIN airport departure_airport on departure_airport.id = f.from_location_id
+                    INNER JOIN airport arrive_airport on arrive_airport.id = f.to_location_id
                   WHERE f.id=@Id";
 
             var result = await _dbConnection.QueryAsync<Flight, Trip, Airline, Airport, Airport, Flight>(query,
@@ -52,7 +52,7 @@ namespace AirportAPI.DapperDataAccess.Repositories.Flight
                     flight.DepartureAirport = airport;
                     flight.ArriveAirport = a2;
                     return flight;
-                }, param: new {Id = id});
+                }, new {Id = id});
 
             return result.FirstOrDefault();
         }

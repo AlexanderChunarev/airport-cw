@@ -16,8 +16,8 @@ namespace AirportAPI.Services.Flight.GetFlight
 
         public async Task Execute(int id)
         {
-            var createdFlight = await _flightRepository.GetById(id);
-            _outputPort.Ok(createdFlight);
+            var flight = await _flightRepository.GetById(id);
+            _outputPort.Ok(flight);
         }
     }
 }
