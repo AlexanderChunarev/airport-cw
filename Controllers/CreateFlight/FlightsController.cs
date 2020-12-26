@@ -3,23 +3,23 @@ using AirportAPI.Models;
 using AirportAPI.Services.Flight.CreateFlight;
 using Microsoft.AspNetCore.Mvc;
 
-namespace AirportAPI.Controllers
+namespace AirportAPI.Controllers.CreateFlight
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class FlightController : Controller
+    public class FlightsController : Controller
     {
         private readonly ICreateFlightService _flightService;
         private readonly CreateFlightPresenter _flightPresenter;
         
-        public FlightController(ICreateFlightService flightService, CreateFlightPresenter flightPresenter)
+        public FlightsController(ICreateFlightService flightService, CreateFlightPresenter flightPresenter)
         {
             _flightService = flightService;
             _flightPresenter = flightPresenter;
         }
 
-        [HttpPost]
-        public async Task<IActionResult> CreateFlight([FromBody] Flight flight)
+        [HttpPost("create")]
+        public async Task<IActionResult> Post([FromBody] Flight flight)
         {
             await _flightService.Execute(flight);
             return _flightPresenter.ViewModel;
