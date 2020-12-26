@@ -1,5 +1,5 @@
 using System.Data;
-using AirportAPI.Repositories.Flight;
+using AirportAPI.DapperDataAccess.Repositories.Flight;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Npgsql;

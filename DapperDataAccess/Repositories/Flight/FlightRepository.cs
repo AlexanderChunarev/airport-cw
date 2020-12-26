@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using Dapper;
 
-namespace AirportAPI.Repositories.Flight
+namespace AirportAPI.DapperDataAccess.Repositories.Flight
 {
     public class FlightRepository : IFlightRepository
     {
