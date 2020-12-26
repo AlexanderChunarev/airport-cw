@@ -21,7 +21,6 @@ namespace AirportAPI.DapperDataAccess.Repositories.Trip
         public async Task<Trip> GetById(int id)
         {
             DefaultTypeMap.MatchNamesWithUnderscores = true;
-            Console.WriteLine(id);
             const string query =
                 @"SELECT * FROM trip
                        INNER JOIN airline ON airline.id=trip.airline_id
