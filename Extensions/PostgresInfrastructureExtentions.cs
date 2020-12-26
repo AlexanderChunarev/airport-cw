@@ -15,6 +15,7 @@ namespace AirportAPI.Extensions
                 options => new NpgsqlConnection(configuration.GetConnectionString("DefaultConnection")));
 
             services.AddScoped<IFlightRepository, FlightRepository>();
+            
             return services;
         }
     }
