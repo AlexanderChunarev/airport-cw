@@ -2,8 +2,12 @@
 
 namespace AirportAPI.DapperDataAccess.Repositories.Flight
 {
+    using Models;
+
     public interface IFlightRepository
     {
-        Task<Models.Flight> Add(Models.Flight flight);
+        Task<Flight> Add(Flight flight);
+
+        Task<Flight> GetById(int id);
     }
 }
