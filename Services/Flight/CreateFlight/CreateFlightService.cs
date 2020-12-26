@@ -1,5 +1,5 @@
 ﻿using System.Threading.Tasks;
-using AirportAPI.Repositories.Flight;
+using AirportAPI.DapperDataAccess.Repositories.Flight;
 
 namespace AirportAPI.Services.Flight.CreateFlight
 {
