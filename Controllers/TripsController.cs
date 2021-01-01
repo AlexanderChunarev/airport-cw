@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
+using System.Threading.Tasks;
 using AirportAPI.Services.Trip;
 using Microsoft.AspNetCore.Mvc;
 
@@ -18,9 +19,16 @@ namespace AirportAPI.Controllers
         }
 
         [HttpGet("{id}/details")]
-        public async Task<IActionResult> Get(int id)
+        public async Task<IActionResult> GetTrip(int id)
         {
             await _tripService.GetById(id);
+            return _tripPresenter.ViewModel;
+        }
+
+        [HttpGet("query")]
+        public async Task<IActionResult> Query([Required] int arriveId, [Required] int departureId)
+        {
+            await _tripService.GetByDestinations(departureId, arriveId);
             return _tripPresenter.ViewModel;
         }
     }

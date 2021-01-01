@@ -19,5 +19,11 @@ namespace AirportAPI.Services.Trip
             var trip = await _tripRepository.GetById(id);
             _outputPort.Ok(trip);
         }
+
+        public async Task GetByDestinations(int departureId, int arriveId)
+        {
+            var trips = await _tripRepository.GetByDestination(departureId, arriveId);
+            _outputPort.Ok(trips);
+        }
     }
 }

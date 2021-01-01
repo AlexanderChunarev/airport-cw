@@ -9,8 +9,8 @@ namespace AirportAPI.DapperDataAccess.Repositories.Trip
     {
         Task<Trip> GetById(int id);
 
-        Task<List<Trip>> GetData(Airport airport);
+        Task<List<Trip>> GetByDestination(int departureId, int arriveId);
         
-        Task<List<Trip>> GetData(Airline airline);
+        Task<List<Trip>> GetByAirline(int airlineId);
     }
 }
