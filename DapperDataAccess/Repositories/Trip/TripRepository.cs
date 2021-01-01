@@ -40,7 +40,7 @@ namespace AirportAPI.DapperDataAccess.Repositories.Trip
                             tripEntity.Flights = new List<Flight>();
                             flights.Add(tripEntity.Id, tripEntity);
                         }
-                        
+
                         flight.DepartureAirport = departureAirport;
                         flight.ArriveAirport = arriveAirport;
                         tripEntity.Flights.Add(flight);
@@ -50,6 +50,17 @@ namespace AirportAPI.DapperDataAccess.Repositories.Trip
                     }, new {Id = id}, splitOn: "id,id,id,id");
 
             return result.FirstOrDefault();
+        }
+
+        public async Task<List<Trip>> GetData(Airport airport)
+        {
+            const string query = @"SELECT * FROM trip";
+            throw new NotImplementedException();
+        }
+
+        public async Task<List<Trip>> GetData(Airline airline)
+        {
+            throw new NotImplementedException();
         }
     }
 }

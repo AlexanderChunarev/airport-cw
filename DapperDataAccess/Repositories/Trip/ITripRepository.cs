@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace AirportAPI.DapperDataAccess.Repositories.Trip
 {
@@ -7,5 +8,9 @@ namespace AirportAPI.DapperDataAccess.Repositories.Trip
     public interface ITripRepository
     {
         Task<Trip> GetById(int id);
+
+        Task<List<Trip>> GetData(Airport airport);
+        
+        Task<List<Trip>> GetData(Airline airline);
     }
 }

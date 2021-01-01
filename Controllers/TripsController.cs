@@ -1,17 +1,17 @@
 ﻿using System.Threading.Tasks;
-using AirportAPI.Services.Trip.GetTrip;
+using AirportAPI.Services.Trip;
 using Microsoft.AspNetCore.Mvc;
 
-namespace AirportAPI.Controllers.GetTripDetails
+namespace AirportAPI.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
     public class TripsController : Controller
     {
-        private readonly IGetTripDetailsService _tripService;
-        private readonly TripDetailsPresenter _tripPresenter;
+        private readonly ITripService _tripService;
+        private readonly TripPresenter _tripPresenter;
 
-        public TripsController(IGetTripDetailsService tripService, TripDetailsPresenter tripPresenter)
+        public TripsController(ITripService tripService, TripPresenter tripPresenter)
         {
             _tripService = tripService;
             _tripPresenter = tripPresenter;
@@ -20,7 +20,7 @@ namespace AirportAPI.Controllers.GetTripDetails
         [HttpGet("{id}/details")]
         public async Task<IActionResult> Get(int id)
         {
-            await _tripService.Execute(id);
+            await _tripService.GetById(id);
             return _tripPresenter.ViewModel;
         }
     }

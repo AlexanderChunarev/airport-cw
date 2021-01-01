@@ -1,20 +1,20 @@
 ﻿using System.Threading.Tasks;
 using AirportAPI.DapperDataAccess.Repositories.Trip;
 
-namespace AirportAPI.Services.Trip.GetTrip
+namespace AirportAPI.Services.Trip
 {
-    public class GetTripDetailsService : IGetTripDetailsService
+    public class TripService : ITripService
     {
         private readonly ITripRepository _tripRepository;
         private readonly IOutputPort _outputPort;
 
-        public GetTripDetailsService(ITripRepository tripRepository, IOutputPort outputPort)
+        public TripService(ITripRepository tripRepository, IOutputPort outputPort)
         {
             _tripRepository = tripRepository;
             _outputPort = outputPort;
         }
 
-        public async Task Execute(int id)
+        public async Task GetById(int id)
         {
             var trip = await _tripRepository.GetById(id);
             _outputPort.Ok(trip);
