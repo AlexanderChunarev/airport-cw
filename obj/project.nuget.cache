@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "cUPDvnnAYPdyirwhDQvHxEQNWTKBE2QjmUNnP7ND3IRN8In+/rnrLtsBnutmTdYWJ4PfSArwHjE3144m4dtiWg==",
+  "dgSpecHash": "8gbuEgn3s0qRDdTyJH3DfkcG0Hc7nhxj/l2i7i4ygiuGuxsyjeXANASmLz6OO8K6lqMb4MXzyhfnuC8RrV4KPQ==",
   "success": true,
-  "projectFilePath": "C:\\Users\\Uss\\RiderProjects\\AirportAPI\\AirportAPI\\AirportAPI.csproj",
+  "projectFilePath": "C:\\Users\\Uss\\RiderProjects\\airport-cw\\AirportAPI.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Uss\\.nuget\\packages\\dapper\\2.0.78\\dapper.2.0.78.nupkg.sha512",
     "C:\\Users\\Uss\\.nuget\\packages\\fluentmigrator\\3.2.9\\fluentmigrator.3.2.9.nupkg.sha512",

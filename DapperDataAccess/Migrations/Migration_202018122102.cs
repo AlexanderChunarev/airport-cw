@@ -26,6 +26,8 @@ namespace AirportAPI.DapperDataAccess.Migrations
                 .WithColumn("id").AsInt32().NotNullable().PrimaryKey().Identity()
                 .WithColumn("name").AsString()
                 .WithColumn("city").AsString()
+                .WithColumn("latitude").AsDouble()
+                .WithColumn("longitude").AsDouble()
                 .WithColumn("country_id").AsInt32().ForeignKey("country", "id");
             
             Create.Table("trip")
