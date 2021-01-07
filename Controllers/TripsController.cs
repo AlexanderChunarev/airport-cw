@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
 using AirportAPI.Services.Trip;
 using Microsoft.AspNetCore.Mvc;
@@ -24,11 +25,23 @@ namespace AirportAPI.Controllers
             await _tripService.GetById(id);
             return _tripPresenter.ViewModel;
         }
-
-        [HttpGet("query")]
-        public async Task<IActionResult> Query([Required] int arriveId, [Required] int departureId)
+        
+        [HttpGet("")]
+        public async Task<IActionResult> GetAllTrips(
+            [Required] int arriveId,
+            [Required] int departureId)
         {
-            await _tripService.GetByDestinations(departureId, arriveId);
+            await _tripService.GetAll(departureId, arriveId);
+            return _tripPresenter.ViewModel;
+        }
+
+        [HttpGet("filter")]
+        public async Task<IActionResult> Query(
+            [Required] int arriveId,
+            [Required] int departureId,
+            [Required] int airlineId)
+        {
+            await _tripService.GetByQuery(departureId, arriveId, airlineId);
             return _tripPresenter.ViewModel;
         }
     }

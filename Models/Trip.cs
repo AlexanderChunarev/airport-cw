@@ -9,5 +9,8 @@ namespace AirportAPI.Models
         public Airport DepartureAirport { get; set; }
         public Airport ArriveAirport { get; set; }
         public List<Flight> Flights { get; set; }
+        public int Transfers { get; set; }
+        public int Distance { get; set; }
+        public string TotalFlightTime { get; set; }
     }
 }

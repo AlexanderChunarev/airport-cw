@@ -19,8 +19,8 @@ namespace AirportAPI.DapperDataAccess.Repositories.Flight
         public async Task<Flight> Add(Flight flight)
         {
             const string query =
-                @"INSERT INTO flight(trip_id, from_location_id, to_location_id, departure_date, arrive_date, flight_code, plane_id)
-                    VALUES (@TripId, @FromLocationId, @ToLocationId, @DepartureDate, @ArriveDate, @FlightCode, @PlaneId) RETURNING *";
+                @"INSERT INTO flight(trip_id, from_location_id, to_location_id, departure_date, arrive_date, flight_code, plane_id, flight_time)
+                    VALUES (@TripId, @FromLocationId, @ToLocationId, @DepartureDate, @ArriveDate, @FlightCode, @PlaneId, @FlightTime) RETURNING *";
             return await _dbConnection.QueryFirstAsync<Flight>(query, new
             {
                 TripId = flight.Trip.Id,
@@ -29,7 +29,8 @@ namespace AirportAPI.DapperDataAccess.Repositories.Flight
                 flight.DepartureDate,
                 flight.ArriveDate,
                 flight.FlightCode,
-                flight.PlaneId
+                flight.PlaneId,
+                flight.FlightTime
             });
         }
 
