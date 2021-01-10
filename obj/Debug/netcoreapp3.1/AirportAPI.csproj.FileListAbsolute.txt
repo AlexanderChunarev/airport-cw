@@ -106,3 +106,4 @@ C:\Users\Uss\RiderProjects\airport-cw\obj\Debug\netcoreapp3.1\AirportAPI.csproj.
 C:\Users\Uss\RiderProjects\airport-cw\obj\Debug\netcoreapp3.1\staticwebassets\AirportAPI.StaticWebAssets.Manifest.cache
 C:\Users\Uss\RiderProjects\airport-cw\obj\Debug\netcoreapp3.1\staticwebassets\AirportAPI.StaticWebAssets.xml
 C:\Users\Uss\RiderProjects\airport-cw\obj\Debug\netcoreapp3.1\AirportAPI.genruntimeconfig.cache
+C:\Users\Uss\RiderProjects\airport-cw\bin\Debug\netcoreapp3.1\DapperDataAccess\Repositories\Trip\e.json

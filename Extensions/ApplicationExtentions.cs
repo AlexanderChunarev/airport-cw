@@ -1,3 +1,4 @@
+using AirportAPI.Services.Country;
 using AirportAPI.Services.Flight;
 using AirportAPI.Services.Trip;
 using Microsoft.Extensions.DependencyInjection;
@@ -10,6 +11,7 @@ namespace AirportAPI.Extensions
         {
             services.AddScoped<IFlightService, FlightService>();
             services.AddScoped<ITripService, TripService>();
+            services.AddScoped<ICountryService, CountryService>();
 
             return services;
         }
