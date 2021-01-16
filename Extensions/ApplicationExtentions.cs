@@ -1,3 +1,4 @@
+using AirportAPI.Services.Airport;
 using AirportAPI.Services.Country;
 using AirportAPI.Services.Flight;
 using AirportAPI.Services.Trip;
@@ -12,6 +13,7 @@ namespace AirportAPI.Extensions
             services.AddScoped<IFlightService, FlightService>();
             services.AddScoped<ITripService, TripService>();
             services.AddScoped<ICountryService, CountryService>();
+            services.AddScoped<IAirportService, AirportService>();
 
             return services;
         }

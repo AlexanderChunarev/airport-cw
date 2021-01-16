@@ -1,4 +1,5 @@
-﻿using System.Data;
+﻿using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using AirportAPI.Models;
@@ -22,6 +23,14 @@ namespace AirportAPI.DapperDataAccess.Repositories.Airport
             const string query = @"SELECT * FROM airport WHERE id=@Id";
 
             return await _dbConnection.QueryFirstAsync<Airport>(query, new {Id = id});
+        }
+
+        public async Task<List<Airport>> GetAllByPattern(string pattern)
+        {
+            const string query = @"SELECT * FROM airport WHERE name ilike @Pattern";
+            var result = await _dbConnection.QueryAsync<Airport>(query, new {Pattern = pattern + '%'});
+
+            return result.ToList();
         }
     }
 }

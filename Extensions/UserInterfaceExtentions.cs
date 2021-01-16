@@ -1,3 +1,4 @@
+using AirportAPI.Services.Airport;
 using AirportAPI.Services.Country;
 using AirportAPI.Services.Flight;
 using AirportAPI.Services.Trip;
@@ -21,6 +22,10 @@ namespace AirportAPI.Extensions
             services.AddScoped<CountryPresenter, CountryPresenter>();
             services.AddScoped<Services.Country.IOutputPort>(
                 x => x.GetRequiredService<CountryPresenter>()
+            );
+            services.AddScoped<AirportPresenter, AirportPresenter>();
+            services.AddScoped<Services.Airport.IOutputPort>(
+                x => x.GetRequiredService<AirportPresenter>()
             );
 
             return services;
