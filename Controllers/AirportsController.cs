@@ -18,6 +18,7 @@ namespace AirportAPI.Controllers
             _airportPresenter = airportPresenter;
         }
 
+        [HttpGet("query")]
         public async Task<IActionResult> GetAirports(string pattern)
         {
             await _airportService.GetAllByPattern(pattern);
