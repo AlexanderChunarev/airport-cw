@@ -12,5 +12,6 @@ namespace AirportAPI.Models
         public DateTime ArriveDate { get; set; }
         public string FlightCode { get; set; }
         public int PlaneId { get; set; }
+        public double FlightTime { get; set; }
     }
 }

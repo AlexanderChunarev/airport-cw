@@ -1893,11 +1893,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Uss\\RiderProjects\\AirportAPI\\AirportAPI\\AirportAPI.csproj",
+      "projectUniqueName": "C:\\Users\\Uss\\RiderProjects\\airport-cw\\AirportAPI.csproj",
       "projectName": "AirportAPI",
-      "projectPath": "C:\\Users\\Uss\\RiderProjects\\AirportAPI\\AirportAPI\\AirportAPI.csproj",
+      "projectPath": "C:\\Users\\Uss\\RiderProjects\\airport-cw\\AirportAPI.csproj",
       "packagesPath": "C:\\Users\\Uss\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Uss\\RiderProjects\\AirportAPI\\AirportAPI\\obj\\",
+      "outputPath": "C:\\Users\\Uss\\RiderProjects\\airport-cw\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
@@ -1968,7 +1968,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.402\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.405\\RuntimeIdentifierGraph.json"
       }
     }
   }

@@ -1,7 +1,9 @@
-using AirportAPI.Services.Flight.CreateFlight;
-using AirportAPI.Services.Flight.GetFlight;
-using AirportAPI.Services.Trip.GetTrip;
+using AirportAPI.Services.Airport;
+using AirportAPI.Services.Country;
+using AirportAPI.Services.Flight;
+using AirportAPI.Services.Trip;
 using Microsoft.Extensions.DependencyInjection;
+using IOutputPort = AirportAPI.Services.Flight.IOutputPort;
 
 namespace AirportAPI.Extensions
 {
@@ -10,16 +12,20 @@ namespace AirportAPI.Extensions
         public static IServiceCollection AddPresenters(this IServiceCollection services)
         {
             services.AddScoped<CreateFlightPresenter, CreateFlightPresenter>();
-            services.AddScoped<Services.Flight.CreateFlight.IOutputPort>(
+            services.AddScoped<IOutputPort>(
                 x => x.GetRequiredService<CreateFlightPresenter>()
             );
-            services.AddScoped<FlightDetailsPresenter, FlightDetailsPresenter>();
-            services.AddScoped<Services.Flight.GetFlight.IOutputPort>(
-                x => x.GetRequiredService<FlightDetailsPresenter>()
+            services.AddScoped<TripPresenter, TripPresenter>();
+            services.AddScoped<Services.Trip.IOutputPort>(
+                x => x.GetRequiredService<TripPresenter>()
             );
-            services.AddScoped<TripDetailsPresenter, TripDetailsPresenter>();
-            services.AddScoped<Services.Trip.GetTrip.IOutputPort>(
-                x => x.GetRequiredService<TripDetailsPresenter>()
+            services.AddScoped<CountryPresenter, CountryPresenter>();
+            services.AddScoped<Services.Country.IOutputPort>(
+                x => x.GetRequiredService<CountryPresenter>()
+            );
+            services.AddScoped<AirportPresenter, AirportPresenter>();
+            services.AddScoped<Services.Airport.IOutputPort>(
+                x => x.GetRequiredService<AirportPresenter>()
             );
 
             return services;

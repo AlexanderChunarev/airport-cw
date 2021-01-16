@@ -1,6 +1,7 @@
-using AirportAPI.Services.Flight.CreateFlight;
-using AirportAPI.Services.Flight.GetFlight;
-using AirportAPI.Services.Trip.GetTrip;
+using AirportAPI.Services.Airport;
+using AirportAPI.Services.Country;
+using AirportAPI.Services.Flight;
+using AirportAPI.Services.Trip;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace AirportAPI.Extensions
@@ -9,12 +10,12 @@ namespace AirportAPI.Extensions
     {
         public static IServiceCollection AddServices(this IServiceCollection services)
         {
-            services.AddScoped<ICreateFlightService, CreateFlightService>();
-            services.AddScoped<IGetFlightDetailsService, GetFlightDetailsService>();
-            services.AddScoped<IGetTripDetailsService, GetTripDetailsService>();
-            
+            services.AddScoped<IFlightService, FlightService>();
+            services.AddScoped<ITripService, TripService>();
+            services.AddScoped<ICountryService, CountryService>();
+            services.AddScoped<IAirportService, AirportService>();
+
             return services;
         }
     }
 }
-
