@@ -27,46 +27,28 @@ namespace AirportAPI.DapperDataAccess.Repositories.Trip
                 @"SELECT * FROM trip
                        INNER JOIN airline ON airline.id=trip.airline_id
                        INNER JOIN (SELECT * FROM flight
-                                      INNER JOIN airport departure_airport ON departure_airport.id = flight.from_location_id
-                                      INNER JOIN airport arrive_airport ON arrive_airport.id = flight.to_location_id
+                                      INNER JOIN airport departure_airport ON departure_airport.id = flight.departure_airport_id
+                                      INNER JOIN airport arrive_airport ON arrive_airport.id = flight.arrive_airport_id
                                   ) AS flights ON flights.trip_id = trip.id
-                  WHERE trip.id=@Id";
-            var result = await ExecuteQuery(query, new {Id = id});
+                  WHERE trip.id=@TripId";
+            var result = await ExecuteQuery(query, new {TripId = id});
             return result.FirstOrDefault();
         }
 
-        public async Task<List<Trip>> GetByQuery(int departureId, int arriveId, int airlineId)
+        public async Task<List<Trip>> GetByQuery(FilterRequest filterRequest)
         {
             DefaultTypeMap.MatchNamesWithUnderscores = true;
-            const string query =
-                @"SELECT * FROM trip
+            var query = @"SELECT * FROM trip
                        INNER JOIN airline ON airline.id=trip.airline_id
                        INNER JOIN (SELECT * FROM flight
-                                      INNER JOIN airport departure_airport ON departure_airport.id = flight.from_location_id
-                                      INNER JOIN airport arrive_airport ON arrive_airport.id = flight.to_location_id
-                                  ) AS flights ON flights.trip_id = trip.id
-                  WHERE trip.from_location_id=@DepartureId AND trip.to_location_id=@ArriveId AND trip.airline_id=@AirlineId";
-            var result = await ExecuteQuery(query,
-                new {DepartureId = departureId, ArriveId = arriveId, AirlineId = airlineId});
-
-            return result.DistinctBy(o => o.Id).ToList();
-        }
-
-        public async Task<List<Trip>> GetAll(int departureId, int arriveId)
-        {
-            DefaultTypeMap.MatchNamesWithUnderscores = true;
-            const string query =
-                @"SELECT * FROM trip
-                       INNER JOIN airline ON airline.id=trip.airline_id
-                       INNER JOIN (SELECT * FROM flight
-                                      INNER JOIN airport departure_airport ON departure_airport.id = flight.from_location_id
+                                      INNER JOIN airport departure_airport ON departure_airport.id = flight.departure_airport_id
                                       INNER JOIN country departure_country ON departure_country.id = departure_airport.country_id
-                                      INNER JOIN airport arrive_airport ON arrive_airport.id = flight.to_location_id
+                                      INNER JOIN airport arrive_airport ON arrive_airport.id = flight.arrive_airport_id
                                       INNER JOIN country arrive_country ON arrive_country.id = arrive_airport.country_id
-                                  ) AS flights ON flights.trip_id = trip.id
-                  WHERE trip.from_location_id=@DepartureId AND trip.to_location_id=@ArriveId";
-            var result = await ExecuteQuery(query,
-                new {DepartureId = departureId, ArriveId = arriveId});
+                                   WHERE flight.departure_date::timestamp < @DepartureDate::timestamp
+                                  ) AS flights ON flights.trip_id = trip.id " + WhereStatementBuilder(filterRequest, "trip");
+            
+            var result = await ExecuteQuery(query, filterRequest);
 
             return result.DistinctBy(o => o.Id).ToList();
         }
@@ -84,18 +66,30 @@ namespace AirportAPI.DapperDataAccess.Repositories.Trip
                         tripEntity = trip;
                         tripEntity.Flights = new List<Flight>();
                         flights.Add(tripEntity.Id, tripEntity);
+                        tripEntity.DepartureAirport = departureAirport;
+                        tripEntity.ArriveAirport = arriveAirport;
                     }
 
                     departureAirport.Country = departureCountry;
                     arriveAirport.Country = arriveCountry;
                     flight.DepartureAirport = departureAirport;
                     flight.ArriveAirport = arriveAirport;
-                    
+
                     tripEntity.Flights.Add(flight);
                     tripEntity.Airline = airline;
 
                     return trip;
                 }, queryParams, splitOn: "id,id,id,id,id,id");
+        }
+
+        private string WhereStatementBuilder(FilterRequest request, string tableName)
+        {
+            var segments = request.GetType().GetProperties()
+                .Where(prop => prop.PropertyType == typeof(int) && (int) prop.GetValue(request, null) != 0)
+                .Select(prop => $"{tableName}.{prop.Name.ToUnderscoreCase()}={prop.GetValue(request)}")
+                .ToList();
+
+            return (segments.Any()) ? "WHERE " + string.Join(" AND ", segments) : "";
         }
     }
 }

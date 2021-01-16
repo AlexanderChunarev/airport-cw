@@ -17,6 +17,7 @@ namespace AirportAPI.Controllers
             _countryPresenter = countryPresenter;
         }
 
+        [HttpGet("query")]
         public async Task<IActionResult> GetCountries(string pattern)
         {
             await _countryService.GetAllByPattern(pattern);
