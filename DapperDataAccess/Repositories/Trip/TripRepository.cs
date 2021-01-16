@@ -60,12 +60,14 @@ namespace AirportAPI.DapperDataAccess.Repositories.Trip
                        INNER JOIN airline ON airline.id=trip.airline_id
                        INNER JOIN (SELECT * FROM flight
                                       INNER JOIN airport departure_airport ON departure_airport.id = flight.from_location_id
+                                      INNER JOIN country departure_country ON departure_country.id = departure_airport.country_id
                                       INNER JOIN airport arrive_airport ON arrive_airport.id = flight.to_location_id
+                                      INNER JOIN country arrive_country ON arrive_country.id = arrive_airport.country_id
                                   ) AS flights ON flights.trip_id = trip.id
                   WHERE trip.from_location_id=@DepartureId AND trip.to_location_id=@ArriveId";
             var result = await ExecuteQuery(query,
                 new {DepartureId = departureId, ArriveId = arriveId});
-            
+
             return result.DistinctBy(o => o.Id).ToList();
         }
 
@@ -73,8 +75,9 @@ namespace AirportAPI.DapperDataAccess.Repositories.Trip
         {
             var flights = new Dictionary<int, Trip>();
 
-            return await _dbConnection.QueryAsync<Trip, Airline, Flight, Airport, Airport, Trip>(query,
-                (trip, airline, flight, departureAirport, arriveAirport) =>
+            return await _dbConnection.QueryAsync<Trip, Airline, Flight, Airport, Country, Airport, Country, Trip>(
+                query,
+                (trip, airline, flight, departureAirport, departureCountry, arriveAirport, arriveCountry) =>
                 {
                     if (!flights.TryGetValue(trip.Id, out var tripEntity))
                     {
@@ -83,13 +86,16 @@ namespace AirportAPI.DapperDataAccess.Repositories.Trip
                         flights.Add(tripEntity.Id, tripEntity);
                     }
 
+                    departureAirport.Country = departureCountry;
+                    arriveAirport.Country = arriveCountry;
                     flight.DepartureAirport = departureAirport;
                     flight.ArriveAirport = arriveAirport;
+                    
                     tripEntity.Flights.Add(flight);
                     tripEntity.Airline = airline;
 
                     return trip;
-                }, queryParams, splitOn: "id,id,id,id");
+                }, queryParams, splitOn: "id,id,id,id,id,id");
         }
     }
 }

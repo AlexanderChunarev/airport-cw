@@ -1,5 +1,6 @@
 using System.Data;
 using AirportAPI.DapperDataAccess.Repositories.Airport;
+using AirportAPI.DapperDataAccess.Repositories.Country;
 using AirportAPI.DapperDataAccess.Repositories.Flight;
 using AirportAPI.DapperDataAccess.Repositories.Trip;
 using Microsoft.Extensions.Configuration;
@@ -19,6 +20,7 @@ namespace AirportAPI.Extensions
             services.AddScoped<IFlightRepository, FlightRepository>();
             services.AddScoped<ITripRepository, TripRepository>();
             services.AddScoped<IAirportRepository, AirportRepository>();
+            services.AddScoped<ICountryRepository, CountryRepository>();
 
             return services;
         }

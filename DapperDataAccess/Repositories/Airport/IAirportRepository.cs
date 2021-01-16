@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace AirportAPI.DapperDataAccess.Repositories.Airport
 {
@@ -7,5 +8,7 @@ namespace AirportAPI.DapperDataAccess.Repositories.Airport
     public interface IAirportRepository
     {
         Task<Airport> GetById(int id);
+        
+        Task<List<Airport>> GetAllByPattern(string pattern);
     }
 }

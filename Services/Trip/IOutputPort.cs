@@ -2,7 +2,7 @@
 
 namespace AirportAPI.Services.Trip
 {
-    public partial interface IOutputPort
+    public interface IOutputPort
     {
         void Ok(Models.Trip trip);
         
