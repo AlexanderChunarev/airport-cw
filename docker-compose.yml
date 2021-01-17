@@ -1,9 +1,31 @@
-﻿version: '3.3'
+﻿version: '3.7'
+
+networks:
+  dev-net:
+    driver: bridge
 
 services:
-  hashify:
+  api:
     build:
       context: ./
       dockerfile: Dockerfile
     ports:
       - 5000:80
+    depends_on:
+      - "db"
+    command: ["dotnet", "run"]
+    networks:
+      - dev-net
+
+  db:
+    container_name: 'postgres'
+    image: postgres:9.5
+    restart: on-failure
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_DB=airport
+    networks:
+      - dev-net
