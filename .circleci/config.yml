@@ -7,7 +7,7 @@ jobs:
 
      - run: |         
          docker info
-         docker build -t rinoceronte -f Dockerfile .
+         docker --build-arg CONNECTION_STRING=$CONNECTION_STRING -t rinoceronte -f Dockerfile .
 
      - run: |         
          docker login --username=$HEROKU_USERNAME --password=$HEROKU_API_KEY registry.heroku.com
