@@ -5,7 +5,8 @@ jobs:
    steps:
      - checkout 
 
-     - run: |         
+     - run: |
+         ./build.sh
          docker info
          docker --build-arg CONNECTION_STRING=$CONNECTION_STRING -t rinoceronte -f Dockerfile .
 
