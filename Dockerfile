@@ -15,4 +15,5 @@ FROM mcr.microsoft.com/dotnet/core/aspnet:3.1
 WORKDIR /app
 COPY --from=build-env /app/out .
 
+CMD ASPNETCORE_ConnectionStrings_DefaultConnection=$CONNECTION_STRING
 CMD ASPNETCORE_URLS=http://*:5000 dotnet AirportAPI.dll
