@@ -6,7 +6,7 @@ jobs:
      - checkout 
      - run:
          name: Build docker image
-         command: ./build.sh
+         command: ./build.sh $CONNECTION_STRING
      - run: |         
          docker login --username=$HEROKU_USERNAME --password=$HEROKU_API_KEY registry.heroku.com
          docker tag rinoceronte registry.heroku.com/$HEROKU_APP_NAME/web
