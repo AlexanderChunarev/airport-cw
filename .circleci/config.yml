@@ -2,11 +2,11 @@ version: 2.1
 jobs:
  build:
    machine: true
+   commands:
+     - bash ./build.sh
    steps:
      - checkout 
-
      - run: |
-         ./build.sh
          docker info
          docker --build-arg CONNECTION_STRING=$CONNECTION_STRING -t rinoceronte -f Dockerfile .
 
