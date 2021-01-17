@@ -17,4 +17,4 @@ FROM mcr.microsoft.com/dotnet/core/aspnet:3.1
 WORKDIR /app
 COPY --from=build-env /app/out .
 
-CMD ASPNETCORE_URLS=http://*:5000 dotnet AirportAPI.dll
+CMD ASPNETCORE_URLS=http://*:$PORT dotnet AirportAPI.dll
