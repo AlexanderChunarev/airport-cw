@@ -8,6 +8,8 @@ RUN dotnet restore
 # Copy everything else and build
 COPY . ./
 
+RUN export CONNECTION_STRING=$CONNECTION_STRING
+
 RUN dotnet publish -c Release -o out
 
 # Build runtime image
@@ -15,5 +17,4 @@ FROM mcr.microsoft.com/dotnet/core/aspnet:3.1
 WORKDIR /app
 COPY --from=build-env /app/out .
 
-CMD ASPNETCORE_ConnectionStrings_DefaultConnection=$CONNECTION_STRING
 CMD ASPNETCORE_URLS=http://*:5000 dotnet AirportAPI.dll

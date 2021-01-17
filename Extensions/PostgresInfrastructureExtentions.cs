@@ -1,3 +1,4 @@
+using System;
 using System.Data;
 using AirportAPI.DapperDataAccess.Repositories.Airport;
 using AirportAPI.DapperDataAccess.Repositories.Country;
@@ -15,7 +16,7 @@ namespace AirportAPI.Extensions
             IConfiguration configuration)
         {
             services.AddTransient<IDbConnection>(
-                options => new NpgsqlConnection(configuration.GetConnectionString("DefaultConnection")));
+                options => new NpgsqlConnection(Environment.GetEnvironmentVariable("CONNECTION_STRING")));
 
             services.AddScoped<IFlightRepository, FlightRepository>();
             services.AddScoped<ITripRepository, TripRepository>();
