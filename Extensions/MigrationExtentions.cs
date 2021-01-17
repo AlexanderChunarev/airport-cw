@@ -1,3 +1,4 @@
+using System;
 using AirportAPI.DapperDataAccess.Migrations;
 using FluentMigrator.Runner;
 using Microsoft.AspNetCore.Builder;
@@ -13,7 +14,7 @@ namespace AirportAPI.Extensions
             services.AddFluentMigratorCore()
                 .ConfigureRunner( builder => 
                     builder.AddPostgres()
-                        .WithGlobalConnectionString(configuration.GetConnectionString("DefaultConnection"))
+                        .WithGlobalConnectionString(Environment.GetEnvironmentVariable("CONNECTION_STRING"))
                         .ScanIn(typeof(Migration_202018122102).Assembly).For.All()
                 ).BuildServiceProvider();
             return services;
