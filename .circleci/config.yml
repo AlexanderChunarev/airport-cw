@@ -2,14 +2,11 @@ version: 2.1
 jobs:
  build:
    machine: true
-   commands:
-     - bash ./build.sh
    steps:
      - checkout 
      - run: |
-         docker info
-         docker --build-arg CONNECTION_STRING=$CONNECTION_STRING -t rinoceronte -f Dockerfile .
-
+         name: Build docker image
+         command: ./build.sh
      - run: |         
          docker login --username=$HEROKU_USERNAME --password=$HEROKU_API_KEY registry.heroku.com
          docker tag rinoceronte registry.heroku.com/$HEROKU_APP_NAME/web
