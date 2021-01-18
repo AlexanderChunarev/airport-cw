@@ -1,3 +1,3 @@
 ﻿#!/bin/bash
-export CONNECTION_STRING=$1
-docker build -t rinoceronte -f Dockerfile .
+TAG=$CIRCLE_BRANCH-$CIRCLE_BUILD_NUM
+docker build --build-arg CONNECTION_STRING=$1 -t airport-cw-demo:$TAG -f Dockerfile .
