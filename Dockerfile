@@ -1,14 +1,16 @@
 ﻿FROM mcr.microsoft.com/dotnet/core/sdk:3.1 AS build-env
 WORKDIR /app
 
+ARG CONNECTION_STRING
+
+ENV CONNECTION_STRING=$CONNECTION_STRING
+
 # Copy csproj and restore as distinct layers
 COPY *.csproj ./
 RUN dotnet restore
 
 # Copy everything else and build
 COPY . ./
-
-RUN export CONNECTION_STRING=$CONNECTION_STRING
 
 RUN dotnet publish -c Release -o out
 
