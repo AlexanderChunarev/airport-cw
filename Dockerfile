@@ -3,7 +3,7 @@ WORKDIR /app
 
 ARG CONNECTION_STRING
 
-ENV CONNECTION_STRING=$CONNECTION_STRING
+ENV DB_CONN=$DB_CONN
 
 # Copy csproj and restore as distinct layers
 COPY *.csproj ./
