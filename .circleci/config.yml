@@ -25,6 +25,7 @@ jobs:
             PSQL_CONNECTION_STRING=$CONNECTION_STRING
             ./build.sh $PSQL_CONNECTION_STRING
             TAG=$CIRCLE_BRANCH:$CIRCLE_BUILD_NUM
+            docker logout
             echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin
             docker push $TAG
 workflows:
