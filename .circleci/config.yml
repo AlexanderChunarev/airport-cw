@@ -11,8 +11,6 @@ jobs:
             ./build.sh $PSQL_CONNECTION_STRING
   deploy:
     machine: true
-    requires:
-      - build-docker-image
     steps:
       - checkout
       - run:
@@ -23,7 +21,14 @@ jobs:
             docker push registry.heroku.com/$HEROKU_APP_NAME/web
             curl https://cli-assets.heroku.com/install.sh | sh
             heroku container:release web -a $HEROKU_APP_NAME
-    filters:
-      branches:
-        only:
-          - master
+workflows:
+  build_and_test:
+    jobs:
+      - build-docker-image
+      - deploy:
+          requires:
+            - build-docker-image
+          filters:
+            branches:
+              only:
+                - master
