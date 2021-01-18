@@ -1,21 +1,14 @@
 version: 2.1
 jobs:
-  build-docker-image:
+  deploy-to-prod:
     machine: true
     steps:
       - checkout
       - run:
-          name: Build docker image
+          name: Buid and push docker image to registry
           command: |
             PSQL_CONNECTION_STRING=$CONNECTION_STRING
             ./build.sh $PSQL_CONNECTION_STRING
-  deploy:
-    machine: true
-    steps:
-      - checkout
-      - run:
-          name: Push docker image to registry
-          command: |
             TAG=$CIRCLE_BRANCH:$CIRCLE_BUILD_NUM
             docker login --username=$HEROKU_USERNAME --password=$HEROKU_API_KEY registry.heroku.com
             docker tag $TAG registry.heroku.com/$HEROKU_APP_NAME/web
@@ -27,18 +20,17 @@ jobs:
     steps:
       - checkout
       - run:
-          name: Push docker image to dockerhub registry
+          name: Buid and push docker image to dockerhub registry
           command: |
+            PSQL_CONNECTION_STRING=$CONNECTION_STRING
+            ./build.sh $PSQL_CONNECTION_STRING
             TAG=$CIRCLE_BRANCH:$CIRCLE_BUILD_NUM
             echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin
             docker push $TAG
 workflows:
   build_and_test:
     jobs:
-      - build-docker-image
-      - deploy:
-          requires:
-            - build-docker-image
+      - deploy-to-prod:
           filters:
             branches:
               only:
@@ -46,3 +38,7 @@ workflows:
       - deploy-to-docker-hub:
           requires:
             - build-docker-image
+          filters:
+            branches:
+              ignore:
+                - master
