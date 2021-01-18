@@ -46,7 +46,3 @@ workflows:
       - deploy-to-docker-hub:
           requires:
             - build-docker-image
-          filters:
-            branches:
-              ignore:
-                - master
