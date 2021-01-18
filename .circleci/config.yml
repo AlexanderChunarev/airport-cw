@@ -21,12 +21,11 @@ jobs:
       - run:
           name: Buid and push docker image to dockerhub registry
           command: |
-            TAG=0.1.$CIRCLE_BUILD_NUM
             PSQL_CONNECTION_STRING=$CONNECTION_STRING
             ./build.sh $PSQL_CONNECTION_STRING
             docker logout
             echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin
-            docker push airport-api-$CIRCLE_BRANCH:$TAG
+            docker push docker push korbendetkatopstelok/airport-cw:0.1.$CIRCLE_BUILD_NUM
 workflows:
   build_and_test:
     jobs:
