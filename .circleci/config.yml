@@ -8,8 +8,8 @@ jobs:
           name: Buid and push docker image to registry
           command: |
             PSQL_CONNECTION_STRING=$CONNECTION_STRING
-            ./build.sh $PSQL_CONNECTION_STRING
-            TAG=$CIRCLE_BRANCH:$CIRCLE_BUILD_NUM
+            TAG=0.1.$CIRCLE_BUILD_NUM
+            ./build.sh $PSQL_CONNECTION_STRING $TAG
             docker login --username=$HEROKU_USERNAME --password=$HEROKU_API_KEY registry.heroku.com
             docker tag $TAG registry.heroku.com/$HEROKU_APP_NAME/web
             docker push registry.heroku.com/$HEROKU_APP_NAME/web
@@ -23,8 +23,8 @@ jobs:
           name: Buid and push docker image to dockerhub registry
           command: |
             PSQL_CONNECTION_STRING=$CONNECTION_STRING
-            ./build.sh $PSQL_CONNECTION_STRING
-            TAG=$CIRCLE_BRANCH:$CIRCLE_BUILD_NUM
+            TAG=0.1.$CIRCLE_BUILD_NUM
+            ./build.sh $PSQL_CONNECTION_STRING $TAG
             docker logout
             echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin
             docker push $TAG
