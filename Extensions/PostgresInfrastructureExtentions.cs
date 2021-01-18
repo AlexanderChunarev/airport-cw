@@ -16,7 +16,7 @@ namespace AirportAPI.Extensions
             IConfiguration configuration)
         {
             services.AddTransient<IDbConnection>(
-                options => new NpgsqlConnection(Environment.GetEnvironmentVariable("CONNECTION_STRING")));
+                options => new NpgsqlConnection(Environment.GetEnvironmentVariable("DB_CONN")));
 
             services.AddScoped<IFlightRepository, FlightRepository>();
             services.AddScoped<ITripRepository, TripRepository>();
