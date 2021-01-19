@@ -1,6 +1,9 @@
-﻿using System.Data;
+﻿using System;
+using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
+using AirportAPI.Utils;
 using Dapper;
 
 namespace AirportAPI.DapperDataAccess.Repositories.Flight
@@ -34,28 +37,34 @@ namespace AirportAPI.DapperDataAccess.Repositories.Flight
             });
         }
 
-        public async Task<Flight> GetById(int id)
+        public async Task<List<Flight>> GetAllByQuery(FilterRequest filterRequest)
         {
             DefaultTypeMap.MatchNamesWithUnderscores = true;
-            const string query =
-                @"SELECT *, airline_id FROM flight AS f
-                    INNER JOIN trip t on t.id = f.trip_id
-                    INNER JOIN airline a on a.id = airline_id
-                    INNER JOIN airport departure_airport on departure_airport.id = f.departure_airport_id
-                    INNER JOIN airport arrive_airport on arrive_airport.id = f.arrive_airport_id
-                  WHERE f.id=@Id";
+            var query =
+                @"SELECT * FROM flight
+                    INNER JOIN airport departure_airport on departure_airport.id = flight.departure_airport_id
+                    INNER JOIN country cd on cd.id = departure_airport.country_id
+                    INNER JOIN airport arrive_airport on arrive_airport.id = flight.arrive_airport_id
+                    INNER JOIN country ca on ca.id = arrive_airport.country_id
+                  " + StringUtils.WhereStatementBuilder(filterRequest, "flight");
+            
+            var result = await ExecuteQuery(query, filterRequest);
+            return result.DistinctBy(o => o.Id).ToList();;
+        }
 
-            var result = await _dbConnection.QueryAsync<Flight, Trip, Airline, Airport, Airport, Flight>(query,
-                (flight, trip, airline, airport, a2) =>
+        private async Task<IEnumerable<Flight>> ExecuteQuery(string query, object queryParams)
+        {
+            return await _dbConnection.QueryAsync<
+                Flight, Airport, Country, Airport, Country, Flight>(
+                query,
+                (flight, departureAirport, departureCountry, arriveAirport, arriveCountry) =>
                 {
-                    flight.Trip = trip;
-                    flight.Trip.Airline = airline;
-                    flight.DepartureAirport = airport;
-                    flight.ArriveAirport = a2;
+                    flight.DepartureAirport = departureAirport;
+                    flight.DepartureAirport.Country = departureCountry;
+                    flight.ArriveAirport = arriveAirport;
+                    flight.ArriveAirport.Country = arriveCountry;
                     return flight;
-                }, new {Id = id});
-
-            return result.FirstOrDefault();
+                }, queryParams, splitOn: "id,id,id");
         }
     }
 }

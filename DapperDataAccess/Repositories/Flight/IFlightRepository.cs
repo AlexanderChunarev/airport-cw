@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace AirportAPI.DapperDataAccess.Repositories.Flight
 {
@@ -8,6 +9,6 @@ namespace AirportAPI.DapperDataAccess.Repositories.Flight
     {
         Task<Flight> Add(Flight flight);
 
-        Task<Flight> GetById(int id);
+        Task<List<Flight>> GetAllByQuery(FilterRequest filterRequest);
     }
 }
