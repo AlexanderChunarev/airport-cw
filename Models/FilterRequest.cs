@@ -4,6 +4,7 @@ namespace AirportAPI.Models
 {
     public class FilterRequest
     {
+        public int TripId { get; set; }
         public int DepartureCountryId { get; set; }
         public int ArriveCountryId { get; set; }
         public int DepartureAirportId { get; set; }

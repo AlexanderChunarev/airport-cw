@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using AirportAPI.Models;
 using AirportAPI.Services.Trip;
+using AirportAPI.Services.Trip.Boundaries;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AirportAPI.Controllers
@@ -20,6 +21,13 @@ namespace AirportAPI.Controllers
         {
             _tripService = tripService;
             _tripPresenter = tripPresenter;
+        }
+
+        [HttpPost("create")]
+        public async Task<IActionResult> Create([FromBody] AddTripInput input)
+        {
+            await _tripService.Add(input);
+            return _tripPresenter.ViewModel;
         }
 
         [HttpGet("{id}/details")]

@@ -8,6 +8,6 @@ namespace AirportAPI.Services.Flight
     {
         public Task Add(Flight flight);
 
-        public Task GetById(int id);
+        public Task GetAllByTripId(FilterRequest filterRequest);
     }
 }

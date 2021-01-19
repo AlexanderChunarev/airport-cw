@@ -42,9 +42,9 @@ namespace AirportAPI.Services.Flight
             _outputPort.Created(createdFlight);
         }
 
-        public async Task GetById(int id)
+        public async Task GetAllByTripId(FilterRequest filterRequest)
         {
-            var flight = await _flightRepository.GetById(id);
+            var flight = await _flightRepository.GetAllByQuery(filterRequest);
             _outputPort.Ok(flight);
         }
 

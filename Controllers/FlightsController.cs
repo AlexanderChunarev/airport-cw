@@ -25,10 +25,10 @@ namespace AirportAPI.Controllers
             return _flightPresenter.ViewModel;
         }
 
-        [HttpGet("{id}/details")]
-        public async Task<IActionResult> Get(int id)
+        [HttpGet("query")]
+        public async Task<IActionResult> Get([FromQuery] FilterRequest filterRequest)
         {
-            await _flightService.GetById(id);
+            await _flightService.GetAllByTripId(filterRequest);
             return _flightPresenter.ViewModel;
         }
     }

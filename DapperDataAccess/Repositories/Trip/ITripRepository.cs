@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using AirportAPI.Services.Trip.Boundaries;
 
 namespace AirportAPI.DapperDataAccess.Repositories.Trip
 {
@@ -10,5 +11,7 @@ namespace AirportAPI.DapperDataAccess.Repositories.Trip
         Task<Trip> GetById(int id);
 
         Task<List<Trip>> GetByQuery(FilterRequest filterRequest);
+
+        Task<int> Add(AddTripInput input);
     }
 }
