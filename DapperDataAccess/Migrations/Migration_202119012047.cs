@@ -9,9 +9,8 @@ namespace AirportAPI.DapperDataAccess.Migrations
         {
             Execute.Sql(@"INSERT INTO airline(name, description)
             VALUES ('Turkish Airlines®', 'Some description.'),
-            ('AIRWAYS', 'Some description.')
-            ('KLM Royal Dutch Airlines', 'Some description.')
-            ");
+            ('AIRWAYS', 'Some description.'),
+            ('KLM Royal Dutch Airlines', 'Some description.')");
         }
 
         public override void Down()
