@@ -14,7 +14,7 @@ namespace AirportAPI.Extensions
             services.AddFluentMigratorCore()
                 .ConfigureRunner( builder => 
                     builder.AddPostgres()
-                        .WithGlobalConnectionString(configuration.GetConnectionString("DefaultConnection"))
+                        .WithGlobalConnectionString(Environment.GetEnvironmentVariable("DB_CONN"))
                         .ScanIn(typeof(Migration_202018122102).Assembly).For.All()
                 ).BuildServiceProvider();
             return services;

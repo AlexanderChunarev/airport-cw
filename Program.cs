@@ -1,3 +1,4 @@
+using System;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 
@@ -7,6 +8,7 @@ namespace AirportAPI
     {
         public static void Main(string[] args)
         {
+            Console.WriteLine(Environment.GetEnvironmentVariable("DB_CONN"));
             CreateHostBuilder(args).Build().Run();
         }
 
